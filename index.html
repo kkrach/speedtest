@@ -28,7 +28,11 @@ body {
   pointer-events: all;
 }
 
-.focus circle {
+.upload_marker circle {
+  fill: none;
+  stroke: steelblue;
+}
+.download_marker circle {
   fill: none;
   stroke: red;
 }
@@ -41,7 +45,7 @@ body {
 <script>
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 80},
+var margin = {top: 30, right: 20, bottom: 30, left: 80},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -116,14 +120,21 @@ d3.csv("speedtest.log", function(error, data) {
   svg.append("g")
       .call(d3.axisLeft(y));
 
-  var focus = svg.append("g")
-      .attr("class", "focus")
+  var upload_marker = svg.append("g")
+      .attr("class", "upload_marker")
       .style("display", "none");
-
-  focus.append("circle")
+  upload_marker.append("circle")
       .attr("r", 4.5);
+  upload_marker.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
 
-  focus.append("text")
+  var download_marker = svg.append("g")
+      .attr("class", "download_marker")
+      .style("display", "none");
+  download_marker.append("circle")
+      .attr("r", 4.5);
+  download_marker.append("text")
       .attr("x", 9)
       .attr("dy", ".35em");
 
@@ -131,8 +142,8 @@ d3.csv("speedtest.log", function(error, data) {
       .attr("class", "overlay")
       .attr("width", width)
       .attr("height", height)
-      .on("mouseover", function() { focus.style("display", null); })
-      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mouseover", function() { upload_marker.style("display", null); download_marker.style("display", null); })
+      .on("mouseout", function() { upload_marker.style("display", "none"); download_marker.style("display", "none"); })
       .on("mousemove", mousemove);
 
   function mousemove() {
@@ -141,8 +152,10 @@ d3.csv("speedtest.log", function(error, data) {
         d0 = data[i - 1],
         d1 = data[i],
         d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-    focus.attr("transform", "translate(" + x(d.date) + "," + y(d.download) + ")");
-    focus.select("text").text(d.download + " MBit/s");
+    upload_marker.attr("transform", "translate(" + x(d.date) + "," + y(d.upload) + ")");
+    upload_marker.select("text").text(d.upload + " MBit/s").attr("transform", "translate(-30,-13)");
+    download_marker.attr("transform", "translate(" + x(d.date) + "," + y(d.download) + ")");
+    download_marker.select("text").text(d.download + " MBit/s").attr("transform", "translate(-30,-13)");
   }
 
 });
