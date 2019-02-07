@@ -15,4 +15,4 @@ DOWNLOAD=`jq .download $INPUT`
 if [ ! -e $OUTPUT ] ; then
 	echo "date,upload,download" > $OUTPUT
 fi
-echo "$DATE,$UPLOAD,$DOWNLOAD" >> $OUTPUT
+echo "$DATE,$(echo "scale=3; $UPLOAD/1000000" | bc | sed 's/^\./0./'),$(echo "scale=3; $DOWNLOAD/1000000" | bc | sed 's/^\./0./')" >> $OUTPUT
