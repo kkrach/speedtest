@@ -19,5 +19,6 @@ if ! $BASEDIR/measure.sh $FILENAME ; then
 	exit 0
 fi
 $BASEDIR/append.sh $FILENAME $LOGFILE
+$BASEDIR/upload.sh $LOGFILE
 
 echo "Created $FILENAME"
