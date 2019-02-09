@@ -8,5 +8,5 @@ fi
 FILENAME="$1"
 BASEDIR=`dirname $0`
 
-$BASEDIR/speedtest.py --secure --json > /tmp/measure.tmp
+$BASEDIR/speedtest.py --secure --json > /tmp/measure.tmp 2>&1
 cat /tmp/measure.tmp > $FILENAME
