@@ -20,6 +20,4 @@ if ! $BASEDIR/measure.sh $FILENAME ; then
 fi
 $BASEDIR/append.sh $FILENAME $LOGFILE
 
-scp -q $LOGFILE u16352@kkrach.de:kkrach.de/speedtest/
-
 echo "Created $FILENAME"
