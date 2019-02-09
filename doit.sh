@@ -1,4 +1,8 @@
 #!/bin/bash -ue
+#
+# Calling by cronjob (crontab -e):
+#    */10 * * * * /home/charly/speedtest/doit.sh >> /home/charly/speedtest/doit.log
+#
 
 
 echo "Delaying execution for 5 minutes..." 1>&2
